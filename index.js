@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 1985
+const port = process.env.PORT
 
 app.get('/', (req, res) => {
     res.send('Página Inicial')
