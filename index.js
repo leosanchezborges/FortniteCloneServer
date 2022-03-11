@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
     res.send('Página Inicial')
 })
 
-app.get('/signin', (req, res) => {
+app.post('/signin', (req, res) => {
     res.send('Sign In')
 })
 
@@ -14,7 +14,7 @@ app.get('/signout', (req, res) => {
     res.send('Sign Out')
 })
 
-app.get('/signup', (req, res) => {
+app.post('/signup', (req, res) => {
     res.send('Sign Up')
 })
 
