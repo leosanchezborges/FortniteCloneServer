@@ -10,6 +10,7 @@ app.use(cors())
 app.enable('trust proxy');
 
 const User = require('./model/User')
+const Game = require("./model/Game")
 
 const port = process.env.PORT || 3000
 
@@ -42,4 +43,15 @@ app.listen(port, () => {
 
 app.get('/emailauthentication', (req, res) => {
     res.send('E-mail Authentication')
+})
+
+app.post('/createroom', (req, res) => {
+
+    const newGame = new Game()
+    newGame.roomName = req.body.roomName
+    newGame.roomPassword = req.body.roomPassword
+
+    newGame.save()
+
+    res.send(newGame)
 })
