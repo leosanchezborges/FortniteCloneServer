@@ -1,12 +1,16 @@
 const express = require('express')
-const redis = require('redis');
-const redisClient = redis.createClient(6379);
-
-redisClient.on('error', (err) => {
-    console.log(err);
-});
-
 const app = express()
+const morgan = require('morgan')
+const cors = require('cors')
+
+app.use(morgan('dev'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors())
+app.enable('trust proxy');
+
+const User = require('./model/User')
+
 const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
@@ -22,7 +26,14 @@ app.get('/signout', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-    res.send('Sign Up')
+    const newUser = new User()
+    newUser.name = req.body.name
+    newUser.email = req.body.email
+    newUser.password = req.body.password
+
+    newUser.save()
+
+    res.send(newUser)
 })
 
 app.listen(port, () => {
