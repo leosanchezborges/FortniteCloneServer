@@ -13,7 +13,7 @@ module.exports = class User {
     }
 
     save() {
-        this.id = uuid.v4()
+        this.id = this.email
 
         redisClient.hset("Users", this.id, JSON.stringify(this), function (err) {
             if (err) {
@@ -22,7 +22,17 @@ module.exports = class User {
             }
         })
 
-        console.log("Usuario salvo com sucesso!");
+        console.log("Usuario salvo com sucesso!", this.id);
     }
 
+    static async load(id, callback) {
+        redisClient.hget("Users", id, function (err, user) {
+            if (err) {
+                console.log("Deu merda!", err);
+                return null;
+            }
+
+            callback(user);
+        })
+    }
 }
