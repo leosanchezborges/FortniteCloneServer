@@ -13,10 +13,9 @@ module.exports = class User {
     }
 
     save() {
-        const id = uuid.v4()
-        this.id = id
+        this.id = uuid.v4()
 
-        redisClient.hset("Users", id, JSON.stringify(this), function (err) {
+        redisClient.hset("Users", this.id, JSON.stringify(this), function (err) {
             if (err) {
                 console.error("Failed to store user in redis: ", err, this)
                 return
