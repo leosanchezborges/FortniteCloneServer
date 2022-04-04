@@ -1,12 +1,16 @@
 const express = require('express')
-const redis = require('redis');
-const redisClient = redis.createClient(6379);
-
-redisClient.on('error', (err) => {
-    console.log(err);
-});
-
 const app = express()
+const morgan = require('morgan')
+const cors = require('cors')
+
+app.use(morgan('dev'))
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(cors())
+app.enable('trust proxy');
+
 const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
