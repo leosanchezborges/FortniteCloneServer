@@ -59,7 +59,46 @@ app.get('/signout', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-    res.send('Sign Up')
+    const NewUser = new User()
+
+    NewUser.name = req.body.name
+    NewUser.email = req.body.email
+    NewUser.password = req.body.password
+
+    if (NewUser.email == null || NewUser.email == '') {
+        res.send({
+            error: "Esqueceu o email, foi?"
+        })
+        return
+    }
+
+    if (NewUser.name == null || NewUser.name == '') {
+        res.send({
+            error: "Esqueceu o nome, foi?"
+        })
+        return
+    }
+
+    if (NewUser.password == null || NewUser.password == '') {
+        res.send({
+            error: "ESQUECER A SENHA EU ACHAVA QUE ERA IMPOSSIVEL, MAS VOCE ME SURPREENDEU"
+        })
+        return
+    }
+
+    NewUser.save((user) => {
+        if (user == null) {
+            res.send({
+                error: "Erro ao criar um novo usuario seu imbecil"
+            })
+
+        }
+
+        delete user.password
+        res.send(user)
+
+    })
+
 })
 
 app.get('/emailauthentication', (req, res) => {

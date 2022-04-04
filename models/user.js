@@ -12,17 +12,19 @@ module.exports = class User {
         this.password = null
     }
 
-    save() {
+    save(callback) {
         this.id = this.email
 
         redisClient.hset("Users", this.id, JSON.stringify(this), function (err) {
             if (err) {
                 console.error("Failed to store user in redis: ", err, this)
+                callback(null)
                 return
             }
         })
 
         console.log("Usuario salvo com sucesso!", this.id);
+        callback(this)
     }
 
     static async load(id, callback) {
