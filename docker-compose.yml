@@ -6,9 +6,12 @@ services:
     working_dir: /app
     environment:
       - REDIS_ENDPOINT=Redis
+      - DYNAMO_ENDPOINT=dynamodb
+      - DYNAMO_PORT=8000
       - PORT=3000
     depends_on:
       - Redis
+      - dynamodb
     ports:
       - 3000:3000
     restart: always
@@ -22,3 +25,14 @@ services:
     ports:
       - 6379:6379
     restart: always
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    container_name: my-dynamodb
+    hostname: dynamodb
+    restart: always
+    volumes:
+      - ./my-dynamodb-data:/home/dynamodblocal/data
+    ports:
+      - 8000:8000
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
