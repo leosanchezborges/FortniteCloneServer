@@ -1,3 +1,5 @@
+my-dynamodb-data/
+
 # Logs
 logs
 *.log

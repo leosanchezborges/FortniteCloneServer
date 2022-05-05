@@ -1,16 +1,15 @@
 // =========================================
-// IMPORTACAO DE BIBLIOTECAS
+// IMPORTACAO DE BIBLIOTECAS ECS5
 // =========================================
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
-const User = require("./models/user")
 
 // =========================================
 // CONFIGURACAO DO SERVIDOR
 // =========================================
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 app.use(morgan('dev'))
 app.use(express.json());
 app.use(express.urlencoded({
@@ -107,5 +106,7 @@ app.get('/emailauthentication', (req, res) => {
 
 
 // =========================================
-// TESTES TEMPORARIOS
+// TESTES
 // =========================================
+
+const FUser = require("./models/fuser")
